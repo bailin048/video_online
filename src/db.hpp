@@ -3,13 +3,14 @@
 #include <mysql/mysql.h>
 #include <mutex>
 #include <string>
+#include <fstream>
 using namespace std;
 
-namespace void_system{
+namespace vod_system{
 #define MYSQL_HOST "127.0.0.1"
-#define MYSQL_USER "uroot"
-#define MYSQL_PWD NULL
-#define MYSQL_NAME "BL_vod_system"
+#define MYSQL_USER "root"
+#define MYSQL_PWD  ""
+#define MYSQL_NAME "BL_vod_system" //库名
 
     static MYSQL* MysqlInit(){
         MYSQL* mysql = mysql_init(NULL);
@@ -20,7 +21,7 @@ namespace void_system{
         //初始化成功,连接服务器
         if(NULL == mysql_real_connect(mysql,MYSQL_HOST,MYSQL_USER,MYSQL_PWD,MYSQL_NAME,
                     0,NULL,0)){
-            cout<<mysql_errno(mysql)<<endl;
+            cout<<"mysql connect: " << mysql_errno(mysql)<<endl;
             mysql_close(mysql);
             return NULL;
         }
@@ -90,7 +91,7 @@ namespace void_system{
                         video_id);
                 return MysqlQuery(_mysql,sql);
             }
-            //获取视频信息
+            //获取全部视频信息
             bool GetAll(Json::Value* video){
 #define VIDEO_GETALL "select * from tb_video;"
                 _mutex.lock();
@@ -153,4 +154,26 @@ namespace void_system{
                 return true;
             }
     };
+    class Tool{
+        //工具类
+        public:
+            //接受数据写入文件
+        static bool WriteFile(const string& name,const string& content){
+            ofstream of;
+            of.open(name,ios::binary);
+            if(of.is_open()){
+                cout<<"open file failed!"<<endl;
+                return false;
+            }
+            of.write(content.c_str(),content.size());
+            if(!of.good()){
+                cout<<"write file failed!"<<endl; 
+                return false;
+            }
+            of.close();
+            return true;
+        }
+    };
 };
+
+
