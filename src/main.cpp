@@ -45,7 +45,7 @@ void VideoUpdate(const Request& req, Response& rsp){
     int video_id = stoi(req.matches[1]);
     Json::Value video;
     Json::Reader reader;
-    bool ret = reader.parse(req.body,video);
+    bool ret = reader.parse(req.body, video);
     if(!ret){
         cout<<"update tb_video:parse video json failed!"<<endl;
         rsp.status = 400;
@@ -57,6 +57,7 @@ void VideoUpdate(const Request& req, Response& rsp){
         rsp.status = 500;
         return;
     }
+    rsp.status = 200;
 }
 void VideoGetAll(const Request& req, Response& rsp){
     //获取全部视频信息
@@ -111,7 +112,7 @@ void VideoUpLoad(const Request& req, Response& rsp){
         rsp.status = 400;
         return;
     }
-    const auto& file3 = req.get_file_value("vodeo_file");
+    const auto& file3 = req.get_file_value("video_file");
 
     ret = req.has_file("image_file");
     if(!ret){
@@ -128,11 +129,11 @@ void VideoUpLoad(const Request& req, Response& rsp){
     const string& ifile = file4.filename;//封面图片名称
     const string& icont = file4.content;//封面图片内容
     //写文件入系统
-    string vurl = VIDEO_PATH + file3.filename;
+    string vurl = VIDEO_PATH + vfile;
     string wwwroot = WWWROOT;
-    vod_system::Tool::WriteFile(wwwroot + vurl,file3.content);
-    string iurl = IMAGE_PATH + file4.filename;
-    vod_system::Tool::WriteFile(wwwroot + iurl,file4.content);
+    vod_system::Tool::WriteFile(wwwroot + vurl, vcont);
+    string iurl = IMAGE_PATH + ifile;
+    vod_system::Tool::WriteFile(wwwroot + iurl, icont);
     //写数据入数据库
     Json::Value video;
     video["name"] = vname;

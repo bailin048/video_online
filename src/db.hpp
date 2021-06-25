@@ -84,11 +84,10 @@ namespace vod_system{
             }
             //更改信息
             bool Update(const size_t video_id,const Json::Value& video){
-#define VIDEO_UPDATE "update tb_video set name='%s',vdesc='%s' where id=%d;"
+#define VIDEO_UPDATE "update tb_video set name='%s', vdesc='%s' where id=%d;"
                 char sql[8192] = {0};
                 sprintf(sql, VIDEO_UPDATE,video["name"].asCString(),
-                        video["vdesc"].asCString(),
-                        video_id);
+                        video["vdesc"].asCString(),video_id);
                 return MysqlQuery(_mysql,sql);
             }
             //获取全部视频信息
@@ -160,8 +159,8 @@ namespace vod_system{
             //接受数据写入文件
         static bool WriteFile(const string& name,const string& content){
             ofstream of;
-            of.open(name,ios::binary);
-            if(of.is_open()){
+            of.open(name,ios::binary | ios::out);
+            if(!of.is_open()){
                 cout<<"open file failed!"<<endl;
                 return false;
             }
