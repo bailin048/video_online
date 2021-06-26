@@ -1,0 +1,73 @@
+<html>
+<body>
+<h1>Hello foreb!</h1>
+<h1>hello</h1>
+<h2>hello</h2>
+<h3>hello</h3>
+<h4>hello</h4>
+<h5>hello</h5>
+<h6>hello</h6>
+<p>段落，
+在html中一般的回车并不起作用，会被解释成为一个空格<br/>但是br不一样，br标签的作用就是换行。
+</p><br>
+<p><b>比如b标签就是加粗</b></p>
+<p><i>比如i标签就是斜体</i></p>
+<p><s>比如s标签就是删除线</s></p>
+<p><u>比如u就是下划线</u></p>
+<img src="./rose.jpg" alt="显示失败时的信息" title="图片提示信息" width="150px" height="150px"
+border="5px">
+<a href="http://www.baidu.com" target="_blank">点击这里打开新标签访问百度</a><br>
+<table align="center" border="1" cellpadding="1" cellspacing="0" width="200" height="20"><br>
+<tr>
+<th>菜名</th>
+<th>单价</th>
+<th>折扣</th>
+</tr>
+<tr>
+<td align="center">红烧茄子</td>
+<td align="center">￥18</td>
+<td align="center">8.8折</td>
+</tr>
+<tr>
+<!--colspan合并列， rowspan合并行-->
+<td colspan="3" align="right">总价：￥18</td>
+</tr><br>
+</table>
+<ul>
+<li>ul/li是无序列表</li>
+<li>ul/li是无序列表</li>
+</ul>
+<ol>
+<li>ol/li是有序列表</li>
+<li>ol/li是有序列表</li>
+</ol><br>
+<dl>
+<dt>dl/dt是小标题</dt>
+<dd>dl/dd是围绕标题的描述</dd>
+<dd>dl/dd是围绕标题的描述</dd>
+</dl><br>
+<input type="text" placeholder="input标签默认是文本框"> <br/>
+<input type="password" placeholder="type属性为password是密码框"> <br/>
+<input type="radio" name="sex">type属性为radio是单选框,name属性相同则默认为同一组-男 <br/>
+<input type="radio" name="sex" checked="checked">type属性为radio是单选框-女<br/>
+<input type="checkbox"> checkbox是复选框-吃饭 <br/>
+<input type="checkbox"> checkbox是复选框-睡觉 <br/>
+<input type="checkbox"> checkbox是复选框-打游戏<br/>
+<input type="checkbox" id="testid"><br>
+<label for="testid">label标签for属性与对应的输入框id对应起来，这时候点击文字也能选中</label><br/>
+<input type="button" value="button是普通按钮" onclick="alert('alert是提示框调用函数')"><br/>
+<input type="submit" value="submit是提交按钮">点击这里就会向服务器提交表单域中的表单数据<br/>
+<input type="file" value="file是文件选择按钮框"><br/>
+<input type="reset" value="reset是清空按钮，会清空表单域的所有数据"><br>
+<select>
+<option selected="selected">--请选择年份--</option>
+<option>1990</option>
+<option>1991</option>
+<option>1992</option>
+</select><br>
+<video src="https://www.runoob.com/try/demo_source/movie.mp4" controls="controls"
+type="video/mp4">video是视频控件标签</video>
+<audio src="https://www.runoob.com/try/demo_source/horse.mp3" controls="controls"
+type="audio/mp3">audio是音频控件标签</audio>
+</body>
+</html>
