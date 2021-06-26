@@ -152,6 +152,7 @@ int main(){
     tb_video = new vod_system::TableVod();
     //搭建http服务器
     Server srv;
+    srv.set_base_dir(WWWROOT);//设置静态资源基目录
     srv.Delete(R"(/video/(\d+))",VideoDelete);//删除
     srv.Put(R"(/video/(\d+))",VideoUpdate);//修改信息
     srv.Get(R"(/video)",VideoGetAll);//获取全部
