@@ -1,5 +1,6 @@
 #include "db.hpp"
 #include "httplib.h"
+#include <sys/stat.h>
 
 #define WWWROOT "./wwwroot" 
 #define VIDEO_PATH "/video/"
@@ -131,8 +132,14 @@ void VideoUpLoad(const Request& req, Response& rsp){
     //写文件入系统
     string vurl = VIDEO_PATH + vfile;
     string wwwroot = WWWROOT;
+    string v_path(wwwroot);
+    v_path += VIDEO_PATH; 
+    mkdir(v_path.c_str(),0775);
     vod_system::Tool::WriteFile(wwwroot + vurl, vcont);
     string iurl = IMAGE_PATH + ifile;
+    string i_path(wwwroot);
+    i_path += IMAGE_PATH;
+    mkdir(i_path.c_str(),0775);
     vod_system::Tool::WriteFile(wwwroot + iurl, icont);
     //写数据入数据库
     Json::Value video;
@@ -152,7 +159,7 @@ int main(){
     tb_video = new vod_system::TableVod();
     //搭建http服务器
     Server srv;
-    srv.set_base_dir(WWWROOT);//设置静态资源基目录
+    srv.set_base_dir(WWWROOT);
     srv.Delete(R"(/video/(\d+))",VideoDelete);//删除
     srv.Put(R"(/video/(\d+))",VideoUpdate);//修改信息
     srv.Get(R"(/video)",VideoGetAll);//获取全部
