@@ -159,7 +159,7 @@ namespace vod_system{
             //接受数据写入文件
         static bool WriteFile(const string& name,const string& content){
             ofstream of;
-            of.open(name,ios::binary | ios::out);
+            of.open(name,ios::binary);
             if(!of.is_open()){
                 cout<<"open file failed!"<<endl;
                 return false;
@@ -170,6 +170,27 @@ namespace vod_system{
                 return false;
             }
             of.close();
+            return true;
+        }
+        static bool ReadFile(const std::string& name,std::string* body){
+            std::ifstream ifile;
+            ifile.open(name,std::ios::binary);
+            if(!ifile.is_open()){
+                cout<<"open "<<name<<" failed!"<<endl;
+                ifile.close();
+                return false;
+            }
+            ifile.seekg(0,std::ios::end);
+            uint64_t length = ifile.tellg();
+            ifile.seekg(0,std::ios::beg);
+            body->resize(length);
+            ifile.read(&(*body)[0],length);
+            if(!ifile.good()){
+                cout<<"read "<<name<<" failed!"<<endl;
+                ifile.close();
+                return false;
+            }
+            ifile.close();
             return true;
         }
     };

@@ -1,3 +1,3 @@
-LFLAG = -L /usr/lib64/mysql -lmysqlclient -ljsoncpp -lpthread
+LFLAG = -L /usr/lib64/mysql -lmysqlclient -ljsoncpp -lpthread -lboost_system
 main:main.cpp db.hpp httplib.h
 	g++ -std=c++11  $^ -o $@  $(LFLAG)

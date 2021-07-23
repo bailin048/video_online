@@ -1,6 +1,7 @@
 #include "db.hpp"
 #include "httplib.h"
 #include <sys/stat.h>
+#include <boost/algorithm/string.hpp>
 
 #define WWWROOT "./wwwroot" 
 #define VIDEO_PATH "/video/"
@@ -153,8 +154,28 @@ void VideoUpLoad(const Request& req, Response& rsp){
         cout<<"insert video:mysql operation failed!"<<endl;
         return;
     }
+    rsp.set_redirect("/");//上传成功刷新界面
+    rsp.set_header("Content-Type","text/html");
+    return;
 }
 
+void VideoPlay(const Request& req, Response& rsp){
+    Json::Value video;
+    int video_id = std::stoi(req.matches[1]);
+    bool ret = tb_video->GetOne(video_id,&video);
+    if(!ret){
+        cout<<"getone video:mysql operation failed!"<<endl;
+        rsp.status = 500;
+        return;
+    }
+    std::string oldstr = "{{video_url}}";
+    std::string newstr =  video["video_url"].asString();
+    std::string play_html = "./wwwroot/single-video.html";
+    boost::algorithm::replace_all(rsp.body, oldstr, newstr);
+    vod_system::Tool::ReadFile(play_html, &rsp.body);
+    rsp.set_header("Content-Type","text/html");
+    return;
+}
 int main(){
     tb_video = new vod_system::TableVod();
     //搭建http服务器
@@ -165,6 +186,7 @@ int main(){
     srv.Get(R"(/video)",VideoGetAll);//获取全部
     srv.Get(R"(/video/(\d+))",VideoGetOne);//获取单条
     srv.Post(R"(/video)",VideoUpLoad);//上传视频
+    srv.Get(R"(/play/(\d+))",VideoPlay);
     srv.listen("0.0.0.0",9000);//监听
     return 0;
 }
