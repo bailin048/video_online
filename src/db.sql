@@ -10,4 +10,3 @@ create table if not exists tb_video(
     image_url varchar(255),
     ctime datetime
 );
-

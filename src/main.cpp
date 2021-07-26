@@ -171,8 +171,8 @@ void VideoPlay(const Request& req, Response& rsp){
     std::string oldstr = "{{video_url}}";
     std::string newstr =  video["video_url"].asString();
     std::string play_html = "./wwwroot/single-video.html";
+	vod_system::Tool::ReadFile(play_html, &rsp.body);
     boost::algorithm::replace_all(rsp.body, oldstr, newstr);
-    vod_system::Tool::ReadFile(play_html, &rsp.body);
     rsp.set_header("Content-Type","text/html");
     return;
 }
