@@ -239,7 +239,6 @@
 				$.ajax({
 					url: "/play/" + video_id,
 					type: "get",
-					async: false,
 					context: this,
 					success: function (res, status, xhr) {
 						var newPage = window.open("about:blank", "_blank");
