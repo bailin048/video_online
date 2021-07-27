@@ -70,17 +70,15 @@
                <!-- VIDEO SINGLE POST -->
                <div class="col-lg-8 col-md-12 col-sm-12">
                   <!-- POST L size -->
-                  <article class="post-video">
+                  <article class="post-video" "video in videos">
                      <!-- VIDEO INFO -->
                      <div class="video-info">
                         <!-- 16:9 aspect ratio -->
                         <div class="embed-responsive embed-responsive-16by9 video-embed-box">
                            <video width="100%" height="100%" controls>
                              <source src="{{video_url}}" type="video/mp4"></video>
-							<!--<source src="http://192.168.81.3:9000/video/horse1.mp4" type="video/mp4"></video>-->
                          </div>
-                        <h2 class="title main-head-title">Kiss me if I’m wrong but Dinosaurs still exist? Right?s</h2>
-                        <div class="metabox">
+						<h2 class="title main-head-title">Kiss me if I’m wrong but Dinosaurs still exist? Right?s</h2>
                            <span class="meta-i">
                               <i class="fa fa-thumbs-up" aria-hidden="true"></i>20.895
                            </span>
@@ -181,16 +179,6 @@
          </footer>
       </div>
    </div>
-   <!-- JAVA SCRIPT -->
-   <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-   <script src="js/jquery-1.12.1.min.js"></script>
-   <script src="js/bootstrap.min.js"></script>
-   <script src="js/lity.js"></script>
-   <script>
-      $(".nav .dropdown").hover(function () {
-         $(this).find(".dropdown-toggle").dropdown("toggle");
-      });
-   </script>
    <!-- MODAL -->
    <div id="enquirypopup" class="modal fade in " role="dialog">
       <div class="modal-dialog">
@@ -220,5 +208,47 @@
       </div>
    </div>
 </body>
-
+<!-- JAVA SCRIPT -->
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="js/jquery-1.12.1.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script src="js/lity.js"></script>
+<script>
+    $(".nav .dropdown").hover(function () {
+      $(this).find(".dropdown-toggle").dropdown("toggle");
+    });
+</script>
+<script>
+	var app = new Vue({
+		el: '#myvideo',
+		data: {
+			videos: []
+		},
+		methods: {
+			getall_videos: function () {
+				$.ajax({
+					url: "/video",
+					type: "get",
+					context: this,
+					success: function (res, status, xhr) {
+						this.videos = res;
+					}
+				})
+			},
+			video_play: function (video_id) {
+				$.ajax({
+					url: "/play/" + video_id,
+					type: "get",
+					async: false,
+					context: this,
+					success: function (res, status, xhr) {
+						var newPage = window.open("about:blank", "_blank");
+						newPage.document.write(res);
+					}
+				})
+			}
+		}
+	});
+	app.getall_videos();
+</script>
 </html>
