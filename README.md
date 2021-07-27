@@ -19,3 +19,5 @@ socket，http，tcp，json，mysql，html，css，js
 本项目采用MVC框架（不太严谨）
 
 ![图片](https://user-images.githubusercontent.com/71803538/122527904-53fc4400-d04e-11eb-9b08-e7b62b97ca57.png)
+
+目前使用Edge可以正常服务
