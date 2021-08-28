@@ -100,6 +100,7 @@ namespace vod_system{
                     return false;
                 }
                 MYSQL_RES* res = mysql_store_result(_mysql);
+				_mutex.unlock();
                 if(NULL == res){
                     cout<<"store result failed!"<<endl;
                     return false;
